@@ -7,7 +7,10 @@ import { ReactComponent as Close } from '../assets/todo-app-main/images/icon-cro
 const Type = () => {
   const [task, setTask] = React.useState([])
   const [check, setCheck] = React.useState([])
-  const [remove, setRemove] = React.useState([])
+  const [all, setAll] = React.useState([])
+  const [remove, setRemove] = React.useState(false)
+  const [active, setActive] = React.useState([])
+  const [completed, setCompleted] = React.useState([])
 
   function handleEnter(e) {
     if (e.keyCode === 13 && !e.target.value == '') {
@@ -24,7 +27,8 @@ const Type = () => {
   }
 
   React.useEffect(() => {
-    if (window.localStorage.length !== 0 && task.length > 0) {
+    const getTask = window.localStorage.getItem('task') ? true : false
+    if (window.localStorage.length !== 0 && getTask) {
       setTask(JSON.parse(window.localStorage.getItem('task')))
     }
   }, [])
@@ -35,23 +39,51 @@ const Type = () => {
     } else {
       window.localStorage.setItem('task', [])
     }
-  }, [task, check, remove])
-  React.useEffect(() => {
-    task.filter(item => {
-      return check.includes(item.id) ? item.check == true : ''
+    task.map((item, index) => {
+      if (item.check && !completed.includes(item)) {
+        setCompleted([...completed, item])
+      } else if (!item.check && completed.includes(item)) {
+        return completed.splice(index, index)
+      }
+      return completed
     })
-  }, [check])
 
-  // React.useEffect(() => {
-  //   // task.filter(item => {
-  //   //   return !remove.includes(item.id) ? setTask([item]) : ''
-  //   // })
-  //   task.find((item, index) => {
-  //     console.log(item)
-  //     return remove.includes(item.id) ? task.splice(index, index) : ''
+    // task.map((item, index) => {
+    //   if (!item.check && !active.includes(item)) {
+    //     setActive([...active, item])
+    //   } else if (item.check && active.includes(item)) {
+    //     return active.splice(index, index)
+    //   }
+    //   return active
+    // })
+  }, [task, check, remove])
+
+  function handleCompleted() {
+    setAll([...task])
+    completed.filter(item => {
+      if (item.check) {
+        setTask([...completed])
+      }
+    })
+  }
+  function showAll() {
+    setTask([...all])
+  }
+  // function showActive() {
+  //   setAll([...task])
+  //   active.filter(item => {
+  //     if (!item.check) {
+  //       setTask([...active])
+  //     }
   //   })
-  // }, [remove])
-
+  // }
+  function handleClear() {
+    task.filter((item, index) => {
+      item.check ? (item.id = 0) : ''
+      item.id == 0 ? setTask([]) : console.log(false)
+      return console.log(task)
+    })
+  }
   return (
     <>
       <Input type="text" onKeyDown={handleEnter} />
@@ -61,10 +93,6 @@ const Type = () => {
               function handleCheck() {
                 item.check = !item.check
 
-                if (check.length !== 0) {
-                  window.localStorage.setItem('check', [JSON.stringify(check)])
-                }
-
                 setCheck([...check, item.id])
               }
 
@@ -72,9 +100,13 @@ const Type = () => {
                 item.id = 0
                 if (item.id === 0) task.splice(index, index)
                 if (index === 0) task.shift()
+                completed.filter(item => {
+                  item.id > 0
+                    ? setCompleted([...completed, item])
+                    : setCompleted([])
+                })
 
-                setRemove([item])
-                console.log(remove)
+                setRemove(!remove)
               }
 
               return (
@@ -99,12 +131,12 @@ const Type = () => {
             )}
           </div>
           <div className="selectTask">
-            <span>All</span>
+            <span onClick={showAll}>All</span>
             <span>Active</span>
-            <span>Complete</span>
+            <span onClick={handleCompleted}>Completed</span>
           </div>
           <div className="Clear">
-            <span>Clear Completed</span>
+            <span onClick={handleClear}>Clear Completed</span>
           </div>
         </div>
       </div>
