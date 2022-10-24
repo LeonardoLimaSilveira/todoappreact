@@ -1,0 +1,12 @@
+.headerLight {
+  background-image: url(./src/assets/todo-app-main/images/bg-desktop-light.jpg);
+}
+header {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 22rem;
+}
+.headerDark {
+  background-image: url(./src/assets/todo-app-main/images/bg-desktop-dark.jpg);
+}

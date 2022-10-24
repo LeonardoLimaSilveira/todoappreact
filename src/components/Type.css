@@ -1,0 +1,78 @@
+.taskContainer {
+  margin: 0 auto;
+  max-width: 43rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: -4rem;
+  box-shadow: 1px 1px 10px hsl(233, 11%, 84%);
+  border-radius: 0.31rem;
+}
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 4.3rem;
+  border-bottom: 2px solid hsl(236, 9%, 61%);
+  color: hsl(235, 19%, 35%);
+  font-weight: bold;
+  font-size: 1rem;
+}
+.IconText {
+  display: flex;
+  align-items: center;
+}
+.iconCheck {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 2px solid hsl(233, 11%, 84%);
+  margin-right: 1.5rem;
+  margin-left: 2rem;
+  cursor: default;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.iconCheck:hover {
+  background-color: hsl(240, 2%, 90%);
+}
+.closeIcon {
+  margin-right: 1.3rem;
+  cursor: pointer;
+}
+.taskInfos {
+  height: 2.5rem;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: hsl(236, 9%, 61%);
+  font-size: 0.9rem;
+}
+.taskCount span {
+  cursor: default;
+}
+.selectTask span:not(:first-child) {
+  margin-left: 10px;
+}
+.check .iconCheck {
+  background: linear-gradient(
+    135deg,
+    rgba(22, 88, 233, 1) 0%,
+    rgba(131, 131, 235, 1) 34%,
+    rgba(134, 124, 232, 1) 58%,
+    rgba(130, 0, 255, 1) 100%
+  );
+}
+.check span {
+  text-decoration: line-through;
+}
+.taskRemove {
+  display: none;
+  visibility: hidden;
+}

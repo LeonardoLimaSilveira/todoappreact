@@ -1,0 +1,37 @@
+.InputContainer {
+  max-width: 43rem;
+  height: 4.3rem;
+  margin: 0 auto;
+  display: flex;
+  border-radius: 0.31rem;
+  align-items: center;
+  position: relative;
+  z-index: 200;
+  top: -12rem;
+  background-color: white;
+}
+.InputCircle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid hsl(233, 11%, 84%);
+  margin-right: 20px;
+  margin-left: 20px;
+  cursor: default;
+  font-size: 1.2rem;
+}
+
+input {
+  height: 3rem;
+  width: 8rem;
+  font-size: 1.4rem;
+  color: hsl(235, 19%, 35%);
+  outline: none;
+  border: none;
+  width: 80%;
+}
+input::placeholder {
+  color: hsl(236, 9%, 61%);
+  left: 0px;
+  font-size: 1.2rem;
+}
