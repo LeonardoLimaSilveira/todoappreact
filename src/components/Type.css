@@ -60,6 +60,9 @@
 .selectTask span:not(:first-child) {
   margin-left: 10px;
 }
+.selectTask span:hover {
+  color: black;
+}
 .check .iconCheck {
   background: linear-gradient(
     135deg,
@@ -75,4 +78,10 @@
 .taskRemove {
   display: none;
   visibility: hidden;
+}
+.completed,
+.active,
+.all {
+  color: hsl(220, 98%, 61%) !important;
+  font-weight: bold;
 }

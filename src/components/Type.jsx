@@ -6,11 +6,11 @@ import { ReactComponent as Close } from '../assets/todo-app-main/images/icon-cro
 
 const Type = () => {
   const [task, setTask] = React.useState([])
-  const [check, setCheck] = React.useState([])
   const [all, setAll] = React.useState([])
   const [remove, setRemove] = React.useState(false)
-  const [active, setActive] = React.useState([])
-  const [completed, setCompleted] = React.useState([])
+  const [active, setActive] = React.useState(false)
+  const [completed, setCompleted] = React.useState(false)
+  const [check, setCheck] = React.useState([])
 
   function handleEnter(e) {
     if (e.keyCode === 13 && !e.target.value == '') {
@@ -36,74 +36,53 @@ const Type = () => {
   React.useEffect(() => {
     if (task.length !== 0) {
       window.localStorage.setItem('task', [JSON.stringify(task)])
+      task.filter(item => {
+        return item.check
+          ? window.localStorage.setItem(item.id, [JSON.stringify(item)])
+          : window.localStorage.removeItem(item.id)
+      })
     } else {
       window.localStorage.setItem('task', [])
     }
-    task.map((item, index) => {
-      if (item.check && !completed.includes(item)) {
-        setCompleted([...completed, item])
-      } else if (!item.check && completed.includes(item)) {
-        return completed.splice(index, index)
-      }
-      return completed
-    })
-
-    // task.map((item, index) => {
-    //   if (!item.check && !active.includes(item)) {
-    //     setActive([...active, item])
-    //   } else if (item.check && active.includes(item)) {
-    //     return active.splice(index, index)
-    //   }
-    //   return active
-    // })
-  }, [task, check, remove])
+  }, [task, remove])
 
   function handleCompleted() {
     setAll([...task])
-    completed.filter(item => {
-      if (item.check) {
-        setTask([...completed])
-      }
-    })
+    setCompleted(true)
+    setActive(false)
   }
   function showAll() {
     setTask([...all])
+    setCompleted(false)
+    setActive(false)
   }
-  // function showActive() {
-  //   setAll([...task])
-  //   active.filter(item => {
-  //     if (!item.check) {
-  //       setTask([...active])
-  //     }
-  //   })
-  // }
-  function handleClear() {
-    task.filter((item, index) => {
-      item.check ? (item.id = 0) : ''
-      item.id == 0 ? setTask([]) : console.log(false)
-      return console.log(task)
-    })
+  function showActive() {
+    setAll([...task])
+    if (completed) {
+      setAll([...task])
+      setCompleted(false)
+    }
+    setActive(true)
   }
+  function handleClear() {}
   return (
     <>
       <Input type="text" onKeyDown={handleEnter} />
       <div className={'taskContainer'}>
-        {task
+        {task && !completed && !active
           ? task.map((item, index) => {
               function handleCheck() {
                 item.check = !item.check
 
-                setCheck([...check, item.id])
+                setRemove(!remove)
               }
 
               function handleDelete() {
                 item.id = 0
-                if (item.id === 0) task.splice(index, index)
-                if (index === 0) task.shift()
-                completed.filter(item => {
-                  item.id > 0
-                    ? setCompleted([...completed, item])
-                    : setCompleted([])
+
+                task.filter((item, index) => {
+                  item.id === 0 ? task.splice(index, 1) : ''
+                  return true
                 })
 
                 setRemove(!remove)
@@ -121,6 +100,70 @@ const Type = () => {
                 </div>
               )
             })
+          : completed
+          ? all.map(item => {
+              function handleCheck() {
+                item.check = !item.check
+
+                setRemove(!remove)
+              }
+
+              function handleDelete() {
+                item.id = 0
+
+                task.filter((item, index) => {
+                  item.id === 0 ? task.splice(index, 1) : ''
+                  return true
+                })
+
+                setRemove(!remove)
+              }
+
+              return item.check ? (
+                <div key={item.id} className={'task'}>
+                  <div className={item.check ? 'IconText check' : 'IconText'}>
+                    <div className={'iconCheck'} onClick={handleCheck}>
+                      <Check />
+                    </div>
+                    <span>{item.text}</span>
+                  </div>
+                </div>
+              ) : (
+                ''
+              )
+            })
+          : active
+          ? all.map(item => {
+              function handleCheck() {
+                item.check = !item.check
+
+                setRemove(!remove)
+              }
+
+              function handleDelete() {
+                item.id = 0
+
+                task.filter((item, index) => {
+                  item.id === 0 ? task.splice(index, 1) : ''
+                  return true
+                })
+
+                setRemove(!remove)
+              }
+
+              return !item.check ? (
+                <div key={item.id} className={'task'}>
+                  <div className={item.check ? 'IconText check' : 'IconText'}>
+                    <div className={'iconCheck'} onClick={handleCheck}>
+                      <Check />
+                    </div>
+                    <span>{item.text}</span>
+                  </div>
+                </div>
+              ) : (
+                ''
+              )
+            })
           : ''}
         <div className="taskInfos">
           <div className="taskCount">
@@ -131,9 +174,24 @@ const Type = () => {
             )}
           </div>
           <div className="selectTask">
-            <span onClick={showAll}>All</span>
-            <span>Active</span>
-            <span onClick={handleCompleted}>Completed</span>
+            <span
+              className={!completed & !active ? 'all' : ''}
+              onClick={showAll}
+            >
+              All
+            </span>
+            <span
+              className={!completed & active ? 'active' : ''}
+              onClick={showActive}
+            >
+              Active
+            </span>
+            <span
+              className={completed & !active ? 'completed' : ''}
+              onClick={handleCompleted}
+            >
+              Completed
+            </span>
           </div>
           <div className="Clear">
             <span onClick={handleClear}>Clear Completed</span>
