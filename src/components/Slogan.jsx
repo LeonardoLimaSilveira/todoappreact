@@ -1,8 +1,8 @@
 import React from 'react'
 import { GlobalContext } from './ThemeContext'
 import './Slogan.css'
-import { ReactComponent as Moon } from '../assets/todo-app-main/images/icon-moon.svg'
-import { ReactComponent as Sun } from '../assets/todo-app-main/images/icon-sun.svg'
+import { ReactComponent as Moon } from '../../public/images/icon-moon.svg'
+import { ReactComponent as Sun } from '../../public/images/icon-sun.svg'
 
 const Teste = () => {
   const [dark, setDark] = React.useContext(GlobalContext)

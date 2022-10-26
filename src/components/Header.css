@@ -1,5 +1,5 @@
 .headerLight {
-  background-image: url(./src/assets/todo-app-main/images/bg-desktop-light.jpg);
+  background-image: url(./public/images/bg-desktop-light.jpg);
 }
 header {
   background-position: center;
@@ -8,5 +8,5 @@ header {
   height: 22rem;
 }
 .headerDark {
-  background-image: url(./src/assets/todo-app-main/images/bg-desktop-dark.jpg);
+  background-image: url(./public/images/bg-desktop-dark.jpg);
 }

@@ -2,9 +2,9 @@ import React from 'react'
 import Input from './InputList/Input'
 import './Type.css'
 import { GlobalContext } from './ThemeContext'
-import { ReactComponent as CloseDark } from '../assets/todo-app-main/images/icon-cross-dark.svg'
-import { ReactComponent as Check } from '../assets/todo-app-main/images/icon-check.svg'
-import { ReactComponent as Close } from '../assets/todo-app-main/images/icon-cross.svg'
+import { ReactComponent as CloseDark } from '../../public/images/icon-cross-dark.svg'
+import { ReactComponent as Check } from '../../public/images/icon-check.svg'
+import { ReactComponent as Close } from '../../public/images/icon-cross.svg'
 
 const Type = () => {
   const [task, setTask] = React.useState([])
