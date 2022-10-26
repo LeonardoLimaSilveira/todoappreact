@@ -9,6 +9,17 @@
   box-shadow: 1px 1px 10px hsl(233, 11%, 84%);
   border-radius: 0.31rem;
 }
+.taskContainerDark {
+  margin: 0 auto;
+  max-width: 43rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: -4rem;
+  box-shadow: 1px 1px 10px hsl(234, 11%, 52%);
+  border-radius: 0.31rem;
+}
 .task {
   display: flex;
   align-items: center;
@@ -19,6 +30,24 @@
   color: hsl(235, 19%, 35%);
   font-weight: bold;
   font-size: 1rem;
+}
+.task span {
+  cursor: default;
+}
+.taskDark {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 4.3rem;
+  background: hsl(237, 14%, 26%);
+  border-bottom: 2px solid white;
+  color: hsl(235, 19%, 35%);
+  font-weight: bold;
+  font-size: 1rem;
+}
+.taskDark {
+  color: white;
 }
 .IconText {
   display: flex;
@@ -38,6 +67,9 @@
   align-items: center;
   justify-content: center;
 }
+.taskDark .iconChek {
+  background-color: hsl(236, 33%, 92%);
+}
 .iconCheck:hover {
   background-color: hsl(240, 2%, 90%);
 }
@@ -47,20 +79,23 @@
 }
 .taskInfos {
   height: 2.5rem;
-  width: 90%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   color: hsl(236, 9%, 61%);
   font-size: 0.9rem;
+  border-bottom: 2px solid hsl(236, 9%, 61%);
 }
 .taskCount span {
   cursor: default;
+  margin-left: 1.3rem;
 }
 .selectTask span:not(:first-child) {
   margin-left: 10px;
 }
-.selectTask span:hover {
+.selectTask span:hover,
+.Clear span:hover {
   color: black;
 }
 .check .iconCheck {
@@ -78,6 +113,20 @@
 .taskRemove {
   display: none;
   visibility: hidden;
+}
+.Clear span {
+  margin-right: 1.3rem;
+}
+.taskContainerDark .taskInfos {
+  color: hsl(234, 11%, 52%);
+  border-bottom: 2px solid white;
+}
+.taskContainerDark .selectTask span:hover,
+.Clear span:hover {
+  color: white;
+}
+.taskContainerDark .taskInfos span:hover {
+  color: white;
 }
 .completed,
 .active,

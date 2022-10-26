@@ -10,6 +10,25 @@
   top: -12rem;
   background-color: white;
 }
+.InputContainerDark {
+  max-width: 43rem;
+  height: 4.3rem;
+  margin: 0 auto;
+  display: flex;
+  border-radius: 0.31rem;
+  align-items: center;
+  position: relative;
+  z-index: 200;
+  top: -12rem;
+  background-color: hsl(237, 14%, 26%);
+}
+.InputContainerDark input {
+  background-color: hsl(237, 14%, 26%);
+  color: white;
+}
+.InputContainerDark input::placeholder {
+  color: white;
+}
 .InputCircle {
   width: 30px;
   height: 30px;

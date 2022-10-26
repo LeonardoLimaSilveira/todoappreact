@@ -1,8 +1,10 @@
 import React from 'react'
+import { GlobalContext } from '../ThemeContext'
 import './Input.css'
 const Input = ({ value, id, type, onKeyDown }) => {
+  const [theme] = React.useContext(GlobalContext)
   return (
-    <div className={'InputContainer'}>
+    <div className={theme ? 'InputContainer' : 'InputContainerDark'}>
       <span className={'InputCircle'}></span>
       <input
         type={type}

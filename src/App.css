@@ -10,3 +10,6 @@
 .light {
   color: white;
 }
+.darkBody {
+  background-color: hsl(237, 14%, 26%);
+}

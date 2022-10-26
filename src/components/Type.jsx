@@ -1,6 +1,8 @@
 import React from 'react'
 import Input from './InputList/Input'
 import './Type.css'
+import { GlobalContext } from './ThemeContext'
+import { ReactComponent as CloseDark } from '../assets/todo-app-main/images/icon-cross-dark.svg'
 import { ReactComponent as Check } from '../assets/todo-app-main/images/icon-check.svg'
 import { ReactComponent as Close } from '../assets/todo-app-main/images/icon-cross.svg'
 
@@ -10,8 +12,10 @@ const Type = () => {
   const [remove, setRemove] = React.useState(false)
   const [active, setActive] = React.useState(false)
   const [completed, setCompleted] = React.useState(false)
-  const [check, setCheck] = React.useState([])
+  const [theme] = React.useContext(GlobalContext)
 
+  const body = document.querySelector('body')
+  theme ? body.classList.remove('darkBody') : body.classList.add('darkBody')
   function handleEnter(e) {
     if (e.keyCode === 13 && !e.target.value == '') {
       setTask([
@@ -36,11 +40,6 @@ const Type = () => {
   React.useEffect(() => {
     if (task.length !== 0) {
       window.localStorage.setItem('task', [JSON.stringify(task)])
-      task.filter(item => {
-        return item.check
-          ? window.localStorage.setItem(item.id, [JSON.stringify(item)])
-          : window.localStorage.removeItem(item.id)
-      })
     } else {
       window.localStorage.setItem('task', [])
     }
@@ -64,11 +63,11 @@ const Type = () => {
     }
     setActive(true)
   }
-  function handleClear() {}
+
   return (
     <>
       <Input type="text" onKeyDown={handleEnter} />
-      <div className={'taskContainer'}>
+      <div className={theme ? 'taskContainer' : 'taskContainerDark'}>
         {task && !completed && !active
           ? task.map((item, index) => {
               function handleCheck() {
@@ -89,14 +88,18 @@ const Type = () => {
               }
 
               return (
-                <div key={item.id} className={'task'}>
+                <div key={item.id} className={theme ? 'task' : 'taskDark'}>
                   <div className={item.check ? 'IconText check' : 'IconText'}>
                     <div className={'iconCheck'} onClick={handleCheck}>
-                      <Check />
+                      {item.check ? <Check /> : ''}
                     </div>
                     <span>{item.text}</span>
                   </div>
-                  <Close className={'closeIcon'} onClick={handleDelete} />
+                  {theme ? (
+                    <Close className={'closeIcon'} onClick={handleDelete} />
+                  ) : (
+                    <CloseDark className={'closeIcon'} onClick={handleDelete} />
+                  )}
                 </div>
               )
             })
@@ -120,10 +123,10 @@ const Type = () => {
               }
 
               return item.check ? (
-                <div key={item.id} className={'task'}>
+                <div key={item.id} className={theme ? 'task' : 'taskDark'}>
                   <div className={item.check ? 'IconText check' : 'IconText'}>
                     <div className={'iconCheck'} onClick={handleCheck}>
-                      <Check />
+                      {item.check ? <Check /> : ''}
                     </div>
                     <span>{item.text}</span>
                   </div>
@@ -140,22 +143,11 @@ const Type = () => {
                 setRemove(!remove)
               }
 
-              function handleDelete() {
-                item.id = 0
-
-                task.filter((item, index) => {
-                  item.id === 0 ? task.splice(index, 1) : ''
-                  return true
-                })
-
-                setRemove(!remove)
-              }
-
               return !item.check ? (
-                <div key={item.id} className={'task'}>
+                <div key={item.id} className={theme ? 'task' : 'taskDark'}>
                   <div className={item.check ? 'IconText check' : 'IconText'}>
                     <div className={'iconCheck'} onClick={handleCheck}>
-                      <Check />
+                      {item.check ? <Check /> : ''}
                     </div>
                     <span>{item.text}</span>
                   </div>
@@ -194,7 +186,7 @@ const Type = () => {
             </span>
           </div>
           <div className="Clear">
-            <span onClick={handleClear}>Clear Completed</span>
+            <span>Clear Completed</span>
           </div>
         </div>
       </div>
